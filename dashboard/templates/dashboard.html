@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card-grid">
+    <div class="card">
+        <h2>📜 Philosophical Quote</h2>
+        <p>Deep wisdom with historical context and modern applications.</p>
+        <a href="{{ url_for('send_quote') }}" class="btn">Send Quote</a>
+    </div>
+
+    <div class="card">
+        <h2>👤 Philosopher Profile</h2>
+        <p>Learn about a great thinker and their contributions to philosophy.</p>
+        <a href="{{ url_for('send_profile') }}" class="btn">Send Profile</a>
+    </div>
+
+    <div class="card">
+        <h2>🧠 Philosophical Thinking</h2>
+        <p>Explore a school of thought: Stoicism, Existentialism, etc.</p>
+        <a href="{{ url_for('send_thinking') }}" class="btn">Send Thinking</a>
+    </div>
+
+    <div class="card">
+        <h2>🌟 Philosophical Lesson</h2>
+        <p>Practical wisdom for modern life from ancient philosophers.</p>
+        <a href="{{ url_for('send_lesson') }}" class="btn">Send Lesson</a>
+    </div>
+
+    <div class="card">
+        <h2>⚖️ Philosophical Debate</h2>
+        <p>Explore different perspectives on fundamental questions.</p>
+        <a href="{{ url_for('send_debate') }}" class="btn">Send Debate</a>
+    </div>
+
+    <div class="card test-card">
+        <h2>🔧 Test Connection</h2>
+        <p>Send a test message to verify Telegram connection.</p>
+        <a href="{{ url_for('test_connection') }}" class="btn btn-test">Test Bot</a>
+    </div>
+</div>
+
+<div class="info-section">
+    <h3>📅 Automated Posting Schedule</h3>
+    <ul>
+        <li><strong>7:00 AM</strong> - Philosophical Quote 🌅</li>
+        <li><strong>11:00 AM</strong> - Philosopher Profile 📚</li>
+        <li><strong>2:00 PM</strong> - Philosophical Thinking 🧠</li>
+        <li><strong>6:00 PM</strong> - Philosophical Lesson 🌆</li>
+        <li><strong>9:00 PM</strong> - Philosophical Debate 🌙</li>
+    </ul>
+    <p class="note">Use this dashboard to manually post content outside the automated schedule.</p>
+</div>
+{% endblock %}
