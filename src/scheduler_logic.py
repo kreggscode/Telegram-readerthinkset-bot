@@ -25,19 +25,20 @@ def decide_post_type() -> str:
     print(f"Current hour: {current_hour}")
     
     # Determine post type based on hour
-    if 6 <= current_hour < 9:
-        return "quote"  # 7 AM posting
-    elif 10 <= current_hour < 12:
-        return "profile"  # 11 AM posting
-    elif 13 <= current_hour < 15:
-        return "thinking"  # 2 PM posting
-    elif 17 <= current_hour < 19:
-        return "lesson"  # 6 PM posting
-    elif 20 <= current_hour < 22:
-        return "debate"  # 9 PM posting
+    # Made more flexible to handle any hour
+    if 6 <= current_hour < 10:
+        return "quote"  # 7 AM posting window
+    elif 10 <= current_hour < 13:
+        return "profile"  # 11 AM posting window
+    elif 13 <= current_hour < 17:
+        return "thinking"  # 2 PM posting window
+    elif 17 <= current_hour < 20:
+        return "lesson"  # 6 PM posting window
+    elif 20 <= current_hour <= 23 or current_hour < 6:
+        return "debate"  # 9 PM posting window + late night/early morning
     else:
         # Default fallback - post a quote
-        print(f"Outside scheduled hours, defaulting to quote")
+        print(f"Outside scheduled hours (hour={current_hour}), defaulting to quote")
         return "quote"
 
 
