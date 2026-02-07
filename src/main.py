@@ -15,21 +15,27 @@ def post_philosophical_content():
     print(f"📝 Decided post type: {post_type}")
     
     try:
-        # Get the appropriate prompt template
+        # Get the appropriate prompt templates
         if post_type in TEXT_TEMPLATES:
-            prompt_func = TEXT_TEMPLATES[post_type]
-            prompt = prompt_func()
+            templates = TEXT_TEMPLATES[post_type]()
+            text_prompt = templates["text"]
+            img_prompt = templates["image"]
             
             print(f"🤖 Generating {post_type} content...")
-            print(f"📋 Prompt preview: {prompt[:150]}...")
             
             # Generate content using AI
-            content = ai.generate_text(prompt)
+            content = ai.generate_text(text_prompt)
             
-            print(f"✅ Content generated successfully!")
+            # Generate image URL
+            img_url = ai.image_url(img_prompt)
+            
+            print(f"✅ Content and image URL generated!")
             print(f"📤 Sending to Telegram...")
             
-            # Send to Telegram
+            # Send photo first, then text (Telegram captions have small limits)
+            # Or try to send as one message if content is short, but these are long.
+            # We'll send the photo first as a "hook" and then the deep content.
+            tg.send_photo(img_url, caption=f"🧠 **{post_type.capitalize()} of the Day**")
             tg.send_text(content)
             
             print(f"✨ Post sent successfully!")

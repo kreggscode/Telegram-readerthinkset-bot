@@ -56,15 +56,15 @@ def get_seed_from_timestamp():
     return int(hashlib.md5(seed_string.encode()).hexdigest()[:8], 16)
 
 
-def get_philosophical_quote_prompt() -> str:
-    """Generate prompt for a philosophical quote with deep context."""
+def get_philosophical_quote_prompt() -> dict:
+    """Generate prompts for a philosophical quote."""
     seed = get_seed_from_timestamp()
     random.seed(seed)
     
     philosopher = random.choice(PHILOSOPHERS)
     concept = random.choice(PHILOSOPHICAL_CONCEPTS)
     
-    return f"""
+    text_prompt = f"""
 Generate a deep, meaningful philosophical quote from {philosopher} related to {concept}.
 
 Format your response EXACTLY like this:
@@ -89,16 +89,19 @@ IMPORTANT:
 - Focus on genuine philosophical insight, not generic motivation
 - Be historically accurate
 """
+    image_prompt = f"A cinematic, highly detailed and artistic portrait of the philosopher {philosopher} in a reflective mood, contemplating the concept of {concept}, historical setting, atmospheric lighting, 8k resolution, masterpiece, philosophical vibe."
+    
+    return {"text": text_prompt, "image": image_prompt}
 
 
-def get_philosophical_thinking_prompt() -> str:
-    """Generate prompt for explaining a philosophical concept or school of thought."""
+def get_philosophical_thinking_prompt() -> dict:
+    """Generate prompts for explaining a philosophical concept or school of thought."""
     seed = get_seed_from_timestamp()
     random.seed(seed)
     
     school = random.choice(PHILOSOPHICAL_SCHOOLS)
     
-    return f"""
+    text_prompt = f"""
 Create an educational post explaining the philosophical school of {school}.
 
 Format your response EXACTLY like this:
@@ -125,16 +128,19 @@ IMPORTANT:
 - Include real philosophical depth
 - Avoid generic self-help language
 """
+    image_prompt = f"A conceptual and artistic illustration representing the philosophical school of {school}, symbolic elements, deep colors, atmospheric, highly detailed, 8k resolution, masterpiece."
+    
+    return {"text": text_prompt, "image": image_prompt}
 
 
-def get_philosopher_profile_prompt() -> str:
-    """Generate a comprehensive profile of a philosopher."""
+def get_philosopher_profile_prompt() -> dict:
+    """Generate prompts for a profile of a philosopher."""
     seed = get_seed_from_timestamp()
     random.seed(seed)
     
     philosopher = random.choice(PHILOSOPHERS)
     
-    return f"""
+    text_prompt = f"""
 Create a compelling profile of the philosopher {philosopher}.
 
 Format your response EXACTLY like this:
@@ -164,17 +170,20 @@ IMPORTANT:
 - Make it engaging and educational
 - Connect their ideas to timeless questions
 """
+    image_prompt = f"A stunning historical portrait of philosopher {philosopher}, detailed facial features, accurate historical clothing, atmospheric library or ancient setting background, 8k, masterpiece."
+    
+    return {"text": text_prompt, "image": image_prompt}
 
 
-def get_philosophical_lesson_prompt() -> str:
-    """Generate practical philosophical wisdom for modern life."""
+def get_philosophical_lesson_prompt() -> dict:
+    """Generate prompts for practical philosophical wisdom."""
     seed = get_seed_from_timestamp()
     random.seed(seed)
     
     philosopher = random.choice(PHILOSOPHERS)
     concept = random.choice(PHILOSOPHICAL_CONCEPTS)
     
-    return f"""
+    text_prompt = f"""
 Create a philosophical lesson that applies {philosopher}'s wisdom about {concept} to modern life.
 
 Format your response EXACTLY like this:
@@ -204,18 +213,20 @@ IMPORTANT:
 - Maintain philosophical rigor
 - Avoid shallow self-help clichés
 """
+    image_prompt = f"An image blending ancient wisdom and modern life, representing {philosopher}'s views on {concept}, surreal or conceptual style, highly detailed, 8k, atmospheric."
+    
+    return {"text": text_prompt, "image": image_prompt}
 
 
-def get_philosophical_debate_prompt() -> str:
-    """Generate a post about philosophical debates and different perspectives."""
+def get_philosophical_debate_prompt() -> dict:
+    """Generate prompts for a philosophical debate."""
     seed = get_seed_from_timestamp()
     random.seed(seed)
     
     concept = random.choice(PHILOSOPHICAL_CONCEPTS)
-    # Pick 2 different philosophers
     philosophers = random.sample(PHILOSOPHERS, 2)
     
-    return f"""
+    text_prompt = f"""
 Create a post exploring different philosophical perspectives on {concept}.
 
 Format your response EXACTLY like this:
@@ -245,6 +256,9 @@ IMPORTANT:
 - Demonstrate critical thinking
 - Encourage readers to form their own views
 """
+    image_prompt = f"Two statues of philosophers {philosophers[0]} and {philosophers[1]} facing each other, symbolic representation of {concept} between them, dramatic lighting, highly detailed, 8k resolution."
+    
+    return {"text": text_prompt, "image": image_prompt}
 
 
 TEXT_TEMPLATES = {
