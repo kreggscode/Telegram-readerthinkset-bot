@@ -71,7 +71,7 @@ Format your response EXACTLY like this:
 
 🧠 **Philosophical Quote of the Day**
 
-💭 "{{"<The actual quote here>"}}"
+💭 "<The actual quote here>"
 
 — **{philosopher}**
 
