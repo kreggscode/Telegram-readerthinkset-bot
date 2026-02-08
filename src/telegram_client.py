@@ -5,57 +5,61 @@ BASE_URL = f"https://api.telegram.org/bot{BOT_TOKEN}"
 
 
 def send_text(text: str):
-    """Send a text message to Telegram channel with proper error handling."""
     url = f"{BASE_URL}/sendMessage"
     data = {
         "chat_id": CHAT_ID,
         "text": text,
         "parse_mode": "Markdown"
     }
-    
-    try:
-        resp = requests.post(url, data=data, timeout=30)
-        resp_json = resp.json()
-        
-        # Check if the request was successful
-        if not resp_json.get("ok"):
-            error_msg = resp_json.get("description", "Unknown error")
-            raise RuntimeError(f"Telegram API error: {error_msg}")
-        
-        print(f"✅ Message sent successfully! Message ID: {resp_json['result']['message_id']}")
-        return resp
-        
-    except requests.exceptions.RequestException as e:
-        raise RuntimeError(f"Failed to send message to Telegram: {str(e)}")
+    resp = requests.post(url, data=data)
+    if resp.ok:
+        msg_id = resp.json().get("result", {}).get("message_id")
+        print(f"✅ Message sent successfully! Message ID: {msg_id}")
+    else:
+        error_msg = resp.json().get("description", "Unknown error")
+        print(f"❌ Telegram API Error (send_text): {error_msg}")
+    return resp
 
 
 def send_photo(image_url: str, caption: str = ""):
-    """Send a photo to Telegram channel with proper error handling."""
-    url = f"{BASE_URL}/sendPhoto"
-    data = {
-        "chat_id": CHAT_ID,
-        "photo": image_url,
-        "caption": caption,
-        "parse_mode": "Markdown"
-    }
-    
+    """
+    Downloads the image from image_url and uploads it to Telegram.
+    This is much more reliable than sending the URL to Telegram.
+    """
     try:
-        resp = requests.post(url, data=data, timeout=30)
-        resp_json = resp.json()
+        # 1. Download the image first
+        print(f"📥 Downloading image from AI: {image_url[:50]}...")
+        img_resp = requests.get(image_url, timeout=60)
+        img_resp.raise_for_status()
         
-        if not resp_json.get("ok"):
-            error_msg = resp_json.get("description", "Unknown error")
+        # 2. Upload to Telegram
+        url = f"{BASE_URL}/sendPhoto"
+        files = {
+            "photo": ("image.jpg", img_resp.content, "image/jpeg")
+        }
+        data = {
+            "chat_id": CHAT_ID,
+            "caption": caption,
+            "parse_mode": "Markdown"
+        }
+        
+        print("📤 Uploading image to Telegram...")
+        resp = requests.post(url, data=data, files=files)
+        
+        if not resp.ok:
+            error_data = resp.json()
+            error_msg = error_data.get("description", "Unknown error")
             raise RuntimeError(f"Telegram API error: {error_msg}")
-        
-        print(f"✅ Photo sent successfully!")
+            
+        print(f"✨ Photo sent successfully! Message ID: {resp.json().get('result', {}).get('message_id')}")
         return resp
         
-    except requests.exceptions.RequestException as e:
-        raise RuntimeError(f"Failed to send photo to Telegram: {str(e)}")
+    except Exception as e:
+        print(f"❌ Failed to send photo: {e}")
+        raise RuntimeError(f"Failed to send photo: {str(e)}")
 
 
 def send_poll(question: str, options: list[str]):
-    """Send a poll to Telegram channel with proper error handling."""
     import json
     url = f"{BASE_URL}/sendPoll"
     data = {
@@ -64,23 +68,10 @@ def send_poll(question: str, options: list[str]):
         "options": json.dumps(options),
         "is_anonymous": False
     }
-    
-    try:
-        resp = requests.post(url, data=data, timeout=30)
-        resp_json = resp.json()
-        
-        if not resp_json.get("ok"):
-            error_msg = resp_json.get("description", "Unknown error")
-            raise RuntimeError(f"Telegram API error: {error_msg}")
-        
-        print(f"✅ Poll sent successfully!")
-        return resp
-        
-    except requests.exceptions.RequestException as e:
-        raise RuntimeError(f"Failed to send poll to Telegram: {str(e)}")
+    resp = requests.post(url, data=data)
+    return resp
 
 
 def send_thread(messages: list[str]):
-    """Send multiple messages as a thread."""
     for msg in messages:
         send_text(msg)
