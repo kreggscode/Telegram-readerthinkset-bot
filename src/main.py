@@ -32,10 +32,14 @@ def post_philosophical_content():
             print(f"✅ Content and image URL generated!")
             print(f"📤 Sending to Telegram...")
             
-            # Send photo first, then text (Telegram captions have small limits)
-            # Or try to send as one message if content is short, but these are long.
-            # We'll send the photo first as a "hook" and then the deep content.
-            tg.send_photo(img_url, caption=f"🧠 **{post_type.capitalize()} of the Day**")
+            # Send photo first — if it fails, we still send the text content
+            try:
+                tg.send_photo(img_url, caption=f"🧠 **{post_type.capitalize()} of the Day**")
+                print(f"✨ Photo sent successfully!")
+            except Exception as e:
+                print(f"⚠️ Photo failed to send, but continuing with text: {e}")
+            
+            # Always send the text content regardless of photo success
             tg.send_text(content)
             
             print(f"✨ Post sent successfully!")

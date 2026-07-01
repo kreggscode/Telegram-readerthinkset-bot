@@ -25,6 +25,7 @@ def send_photo(image_url: str, caption: str = ""):
     """
     Downloads the image from image_url and uploads it to Telegram.
     This is much more reliable than sending the URL to Telegram.
+    Returns response on success, None on failure (does NOT crash).
     """
     try:
         # 1. Download the image first
@@ -49,14 +50,15 @@ def send_photo(image_url: str, caption: str = ""):
         if not resp.ok:
             error_data = resp.json()
             error_msg = error_data.get("description", "Unknown error")
-            raise RuntimeError(f"Telegram API error: {error_msg}")
+            print(f"❌ Telegram API error sending photo: {error_msg}")
+            return None
             
         print(f"✨ Photo sent successfully! Message ID: {resp.json().get('result', {}).get('message_id')}")
         return resp
         
     except Exception as e:
-        print(f"❌ Failed to send photo: {e}")
-        raise RuntimeError(f"Failed to send photo: {str(e)}")
+        print(f"❌ Failed to send photo (non-fatal): {e}")
+        return None
 
 
 def send_poll(question: str, options: list[str]):
