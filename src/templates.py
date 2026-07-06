@@ -268,3 +268,11 @@ TEXT_TEMPLATES = {
     "lesson": get_philosophical_lesson_prompt,
     "debate": get_philosophical_debate_prompt
 }
+
+HASHTAGS = {
+    "quote": "\n\n#Philosophy #PhilosophyQuotes #Quotes #Wisdom #Stoicism #Mindset #Reflections",
+    "thinking": "\n\n#CriticalThinking #Philosophy #MentalModels #CognitiveScience #Wisdom #DeepThoughts",
+    "profile": "\n\n#Philosophers #Biography #HistoryOfPhilosophy #Wisdom #Intellectuals #LearnHistory",
+    "lesson": "\n\n#LifeLessons #Philosophy #Stoicism #Wisdom #SelfImprovement #PersonalGrowth #Reflections",
+    "debate": "\n\n#PhilosophicalDebate #Philosophy #Intellectual #Debates #Existentialism #Logic #Arguments"
+}

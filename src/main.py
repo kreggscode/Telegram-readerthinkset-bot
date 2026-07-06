@@ -1,8 +1,20 @@
 from . import pollinations_client as ai
 from . import telegram_client as tg
 from . import scheduler_logic as sched
-from .templates import TEXT_TEMPLATES
+from .templates import TEXT_TEMPLATES, HASHTAGS
 import random
+
+CURRENT_POST_TYPE = None
+
+# Wrap tg.send_text to automatically append hashtags based on CURRENT_POST_TYPE
+_original_send_text = tg.send_text
+def custom_send_text(text):
+    global CURRENT_POST_TYPE
+    if CURRENT_POST_TYPE:
+        tags = HASHTAGS.get(CURRENT_POST_TYPE, "")
+        text = text + tags
+    return _original_send_text(text)
+tg.send_text = custom_send_text
 from datetime import datetime
 
 
@@ -11,8 +23,10 @@ def post_philosophical_content():
     Posts philosophical content based on the current time.
     Content types: quotes, profiles, thinking, lessons, debates
     """
+    global CURRENT_POST_TYPE
     post_type = sched.decide_post_type()
     print(f"📝 Decided post type: {post_type}")
+    CURRENT_POST_TYPE = post_type
     
     try:
         # Get the appropriate prompt templates
