@@ -270,9 +270,9 @@ TEXT_TEMPLATES = {
 }
 
 HASHTAGS = {
-    "quote": "\n\n#Philosophy #PhilosophyQuotes #Quotes #Wisdom #Stoicism #Mindset #Reflections",
-    "thinking": "\n\n#CriticalThinking #Philosophy #MentalModels #CognitiveScience #Wisdom #DeepThoughts",
-    "profile": "\n\n#Philosophers #Biography #HistoryOfPhilosophy #Wisdom #Intellectuals #LearnHistory",
-    "lesson": "\n\n#LifeLessons #Philosophy #Stoicism #Wisdom #SelfImprovement #PersonalGrowth #Reflections",
-    "debate": "\n\n#PhilosophicalDebate #Philosophy #Intellectual #Debates #Existentialism #Logic #Arguments"
+    "quote": "\n\n🔍 **Topics:** Philosophy • Stoicism • Daily Quotes • Wisdom • Mindset\n#Philosophy #Stoicism #PhilosophyQuotes #Wisdom #DeepThinking #Reflections #Mindset",
+    "thinking": "\n\n🔍 **Topics:** Critical Thinking • Mental Models • Cognitive Science • Logic\n#CriticalThinking #MentalModels #CognitiveScience #Philosophy #DeepThoughts #Wisdom",
+    "profile": "\n\n🔍 **Topics:** Philosophy History • Great Thinkers • Intellectuals • Biographies\n#Philosophers #HistoryOfPhilosophy #Biography #Intellectuals #Philosophy #Wisdom",
+    "lesson": "\n\n🔍 **Topics:** Daily Wisdom • Life Lessons • Personal Growth • Stoic Practice\n#LifeLessons #Stoicism #PersonalGrowth #Philosophy #SelfImprovement #Wisdom",
+    "debate": "\n\n🔍 **Topics:** Philosophical Debates • Ethics • Existentialism • Dialectics\n#PhilosophicalDebate #Existentialism #Ethics #Dialectics #Philosophy #Logic"
 }
